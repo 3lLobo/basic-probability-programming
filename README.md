@@ -1,4 +1,3 @@
-# Basic Probability: Programming, 2017-2018
+# Basic Probability: Programming, 2018-2019
 
-This folder includes homeworks and in class exercises for students of Basic Probability: Programming.
-
+This folder includes homeworks and in class exercises for the class Basic Probability: Programming.
