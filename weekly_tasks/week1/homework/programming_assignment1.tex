@@ -4,6 +4,8 @@
 \usepackage{pythontex}
 \newcommand{\angles}[1]{$\langle$#1$\rangle$}
 
+\newcommand{\link}[1]{\footnote{\color{blue}\href{#1}{#1}}}
+
 %%%%% ADD THIS TO YOUR PREAMBLE BEFORE LOADING Alegreya
 \DeclareFontFamily{T1}{Alegreya-LF}{}
 \newcommand{\adjustalegreya}{\fontdimen5\font=\fontcharht\font`x }
@@ -73,10 +75,10 @@
 \begin{document}
 \maketitle
 
-\paragraph{Note:} if the assignment is unclear to you or if you get stuck, do not hesitate to contact \href{mailto:j.dotlacil@uva.nl}{me}. You can also post a question on Canvas.
+\paragraph{Note:} if the assignment is unclear to you or if you get stuck, do not hesitate to contact me\link{mailto:j.dotlacil@uva.nl}. You can also post a question on Canvas.
 
 \section{Exercise}
-This week we are going to build a simple game of \href{https://en.wikipedia.org/wiki/Rock-paper-scissors}{Rock-Paper-Scissors}. The rules are straightforward. Each of two players chooses one of rock, paper and scissors. Rock beats scissors, scissors beat paper and paper beats rock. The game is played by computer (no interaction with humans). It is played once and the results are printed.
+This week we are going to build a simple game of Rock-Paper-Scissors\link{https://en.wikipedia.org/wiki/Rock-paper-scissors}. The rules are straightforward. Each of two players chooses one of rock, paper and scissors. Rock beats scissors, scissors beat paper and paper beats rock. The game is played by computer (no interaction with humans). It is played once and the results are printed.
 
 You will implement the game in two functions:
 \begin{itemize}
@@ -86,7 +88,7 @@ You will implement the game in two functions:
 
 After implementing the functions, you should write the flow of one game. In the game, first, a random element among rock, paper and scissors (e.g., among 0, 1 and 2) is assigned to one player; similarly for the other player. After that, the program should print what each player chose (using the function \texttt{what\_was\_played}) and decide who won (using the function \texttt{who\_won}).
 
-For the code, you will need to use the module \texttt{random}. Check the documentation \href{https://docs.python.org/3/library/random.html}{here}.
+For the code, you will need to use the module \texttt{random}. Check the documentation here\link{https://docs.python.org/3/library/random.html}.
 
 A run of the code should look as follows (of course, the game is random, so other combinations can be printed):\\
 \noindent \textit{
@@ -96,7 +98,7 @@ Player 2:\\
 The player chose rock.\\
 Player 2 won.}
 
-A skeleton of the code is already given for you in the file \href{https://github.com/BasicProbability/Programming2018/blob/master/weekly%20tasks/week%201/homework/code/start_code.py}{here}. Copy-paste the code into \href{http://py3.codeskulptor.org/}{CodeSkulptor} and work on your code. You only need to fill in the commented parts.
+A skeleton of the code is already given for you in this file \footnote{\href{https://github.com/jakdot/BasicProbabilityProgramming2018-2019/blob/master/weekly_tasks/week1/homework/code/start_code.py}{https://github.com/jakdot/BasicProbabilityProgramming2018-2019/blob/master/weekly\_tasks/week1/homework/code/start\_code.py}}. Copy-paste the code into  CodeSkulptor\link{http://py3.codeskulptor.org/} and work on your code. You only need to fill in the commented parts.
 
 \section{Grading}
 This section tells you what to look out for when programming. It also tells you how you should grade the assignment. In general, whenever you grade 
@@ -104,7 +106,7 @@ someone else's program, try to break it! This means that you should test limit c
 on more common inputs. However, since we are at the start of this course, you should only provide input
 to the program that makes sense (for example, only values 0, 1 or 2 should be inputed into \texttt{who\_won}).
 
-As a general rule, if you the program cannot perform one of the tasks below because it does not start up or crashes, award 0 points for that task. If the program works on some, but not other, values, and 2 points could be awarded, award 1 point.
+As a general rule, if the program cannot perform one of the tasks below because it does not start up or crashes, award 0 points for that task. If 2 points could be awarded on a task and the program does not fully work (e.g., some values are not treated correctly, but other values are) award 1 point.
 
 \enlargethispage{1cm}
 
