@@ -1,0 +1,121 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue, breaklinks=true}
+\usepackage{pythontex}
+\newcommand{\angles}[1]{$\langle$#1$\rangle$}
+
+%%%%% ADD THIS TO YOUR PREAMBLE BEFORE LOADING Alegreya
+\DeclareFontFamily{T1}{Alegreya-LF}{}
+\newcommand{\adjustalegreya}{\fontdimen5\font=\fontcharht\font`x }
+\makeatletter
+\let\Alegreya@@scale\@empty
+%%% uncomment the next line if you want to scale the font,
+%%% changing the value to what suits you
+% \def\Alegreya@@scale{s*[0.9]}%
+\makeatother
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{n}{
+      <-> \Alegreya@@scale Alegreya-Black-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{it}{
+      <-> \Alegreya@@scale Alegreya-BlackItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{sl}{
+      <-> ssub * Alegreya-LF/k/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{n}{
+      <-> \Alegreya@@scale Alegreya-Bold-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{it}{
+      <-> \Alegreya@@scale Alegreya-BoldItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{sl}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{n}{on the spot
+      <-> \Alegreya@@scale Alegreya-Regular-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{it}{
+      <-> \Alegreya@@scale Alegreya-Italic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{sl}{
+      <-> ssub * Alegreya-LF/m/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{sl}{
+      <-> ssub * Alegreya-LF/b/sl
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{n}{
+      <-> ssub * Alegreya-LF/b/n
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{it}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+%%%% NOW YOU CAN SAFELY LOAD Alegreya (don't pass a scale option)
+\usepackage{Alegreya}
+
+\title{Programming Assignment 1 -- Basic Probability\\[2mm]
+\large{2017-2018, Master of Logic, University of Amsterdam}}
+\author{Instructors: Jakub Dotla\v{c}il, Alexandre Cremers and Bas Cornelissen}
+\date{Submission deadline: Wednesday, April 11, 8 am}
+
+\begin{document}
+\maketitle
+
+\paragraph{Note:} if the assignment is unclear to you or if you get stuck, do not hesitate to contact \href{mailto:j.dotlacil@uva.nl}{Jakub} or \href{mailto:bjmcornelissen@gmail.com}{Bas}. You can also post a question on Canvas.
+
+\section{Exercise}
+This week we are going to build a simple game of \href{https://en.wikipedia.org/wiki/Rock-paper-scissors}{Rock-Paper-Scissors}. The rules are straightforward. Each of two players chooses one of rock, paper and scissors. Rock beats scissors, scissors beat paper and paper beats rock. The game is played by computer (no interaction with humans). It is played once and the results are printed.
+
+You will implement the game in two functions:
+\begin{itemize}
+    \item function \texttt{who\_won}. This function takes two arguments, \texttt{value1} and \texttt{value2}. \texttt{value1} and \texttt{value2} can be one of three numbers, 0, 1, and 2, where 0=rock, 1=paper, 2=scissors. The function returns 1 if value1 beats value2, it returns 2 if value2 beats value1 and it returns 0 if neither wins, according to the rules of the game.
+    \item function \texttt{what\_was\_played}. This function takes a value among 0, 1 and 2 and prints the statement \textit{The player chose \angles{item}}, where item=rock if the value is 0, item=paper if the value is 1, item=scissors if the value is 2.
+\end{itemize}
+
+After implementing the functions, you should write the flow of one game. In the game, first, a random element among rock, paper and scissors (e.g., among 0, 1 and 2) is assigned to one player; similarly for the other player. After that, the program should print what each player chose (using the function \texttt{what\_was\_played}) and decide who won (using the function \texttt{who\_won}).
+
+For the code, you will need to use the module \texttt{random}. Check the documentation \href{https://docs.python.org/3/library/random.html}{here}.
+
+A run of the code should look as follows (of course, the game is random, so other combinations can be printed):\\
+\noindent \textit{
+Player 1:\\
+The player chose scissors.\\
+Player 2:\\
+The player chose rock.\\
+Player 2 won.}
+
+A skeleton of the code is already given for you in the file \href{https://github.com/BasicProbability/Programming2018/blob/master/weekly%20tasks/week%201/homework/code/start_code.py}{here}. Copy-paste the code into \href{http://py3.codeskulptor.org/}{CodeSkulptor} and work on your code. You only need to fill in the commented parts.
+
+\section{Grading}
+This section tells you what to look out for when programming. It also tells you how you should grade the assignment. In general, whenever you grade 
+someone else's program, try to break it! This means that you should test limit cases in which the program might fail despite working correctly
+on more common inputs. However, since we are at the start of this course, you should only provide input
+to the program that makes sense (for example, only values 0, 1 or 2 should be inputed into \texttt{who\_won}).
+
+As a general rule, if you the program cannot perform one of the tasks below because it does not start up or crashes, award 0 points for that task. If the program works on some, but not other, values, and 2 points could be awarded, award 1 point.
+
+\enlargethispage{1cm}
+
+\begin{itemize}
+    \item[2 points]	The function \texttt{who\_won} works correctly according to the rules of the game (i.e., the function outputs 1 when it receives values 0 and 2, it outputs 0 when it receives values 1 and 1, it outputs 2 if it receives values 0 and 1 etc.) You can check this by manually testing all possibile combinations in the code and by inspecting the code.
+    \item[2 points] The function \texttt{what\_was\_played} works correctly -- it prints \textit{The player chose rock} if it receives value 0 etc.
+\item[1 point] The computer randomly chooses an integer 0, 1 or 2 for player 1. This can be checked by running the code many times and/or inspecting the code.
+\item[1 point] The computer randomly chooses an integer 0, 1 or 2 for player 2. This can be checked by running the code many times and/or inspecting the code.
+\item[2 points] In one run of the game, the computer correctly prints what each player chose, using the function \texttt{what\_was\_played}.
+\item[2 points] The program uses the function \texttt{who\_won} to determine the winner. It then correctly prints who the winner was (player 1 or player 2, or neither in case of a tie).
+\end{itemize}
+
+
+\end{document}
