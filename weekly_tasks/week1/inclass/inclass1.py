@@ -17,7 +17,10 @@ print("second:", second)
 #2. Add up the values of first and second and store the result\
 #as the variable total_sum. Print the value of total_sum
 
-#3. Concatenate the values of first and second and store the result as the variable first_and_second (that is, 53 should be stored). Print first_and_second. Subtract 3 from first_and_second and assign this to the variable final_count.
+#3. Concatenate the values of first and second and store the result as the
+#variable first_and_second (that is, 53 should be stored). Print
+#first_and_second. Subtract 3 from first_and_second and assign this to the
+#variable final_count.
 
 #4. Create a new variable, third, which has the value of 50. Print the variable.
 
@@ -75,7 +78,8 @@ print("".join(random_pick)) #ignore the part about join for now
 
 def recursive_call(input_string, repetitions, successes):
     """
-    Repeatedly sample two letters from input_string, count the number of times that the sample is the string 'ae' or 'ea' (# of successes)
+    Repeatedly sample two letters from input_string, count the number of times
+    that the sample is the string 'ae' or 'ea' (# of successes)
 
     :param input_string: the string used for sampling
     :param repetitions: how many times the process should be repeated
