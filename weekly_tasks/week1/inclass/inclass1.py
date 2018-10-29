@@ -1,7 +1,8 @@
 """
 This is the set of first exercises used in class.
 
-The comments (marked by #) explain what you should do. Type your code below each comment.
+The comments (marked by #) explain what you should do. Type your code below each
+comment.
 """
 
 #1. Assign values 5 and 3 to variables named first and second;\
@@ -13,7 +14,7 @@ second = 3
 print("first:", first)
 print("second:", second)
 
-#2. Add the values of first and second and store the result\
+#2. Add up the values of first and second and store the result\
 #as the variable total_sum. Print the value of total_sum
 
 #3. Concatenate the values of first and second and store the result as the variable first_and_second (that is, 53 should be stored). Print first_and_second. Subtract 3 from first_and_second and assign this to the variable final_count.
@@ -31,8 +32,9 @@ print("second:", second)
 #Of course, if everything is correct we would expect that the first message is printed.
 
 # We will now use one module, random. We will do so to start learning\
-#how solutions we discussed in the first part of the course can be achieved\
-#brute force (by random sampling). The documentation about Python and its modules\
+#how solutions we discussed in the first part of the course (Basic Probability:
+#theory) can be achieved brute force (by random sampling).\
+#The documentation about Python and its modules\
 #can be found here: https://docs.python.org/3.5/. The documentation about\
 #this particular module is here: https://docs.python.org/3.5/library/random.html.\
 #First, we import the module as follows:
@@ -63,7 +65,7 @@ print("".join(random_pick)) #ignore the part about join for now
 #10. Create a third function, recursive_call. This function takes\
 #three arguments: input_string, repetitions, successes. The function\
 #repeatedly samples two letters on the input string\
-#(and it does so as many times as the number of repetitions).\
+#(and it does so as many times as specified in the argument repetitions).\
 #Whenever the sample consists of two vowels ('ae' or 'ea')\
 #it increments successes. Finally, it returns the number of successes.
 
