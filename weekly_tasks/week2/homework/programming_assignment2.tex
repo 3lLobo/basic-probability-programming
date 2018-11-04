@@ -1,0 +1,133 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue, breaklinks=true}
+\newcommand{\angles}[1]{$\langle$#1$\rangle$}
+
+%%%%% ADD THIS TO YOUR PREAMBLE BEFORE LOADING Alegreya
+\DeclareFontFamily{T1}{Alegreya-LF}{}
+\newcommand{\adjustalegreya}{\fontdimen5\font=\fontcharht\font`x }
+\makeatletter
+\let\Alegreya@@scale\@empty
+%%% uncomment the next line if you want to scale the font,
+%%% changing the value to what suits you
+% \def\Alegreya@@scale{s*[0.9]}%
+\makeatother
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{n}{
+      <-> \Alegreya@@scale Alegreya-Black-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{it}{
+      <-> \Alegreya@@scale Alegreya-BlackItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{sl}{
+      <-> ssub * Alegreya-LF/k/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{n}{
+      <-> \Alegreya@@scale Alegreya-Bold-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{it}{
+      <-> \Alegreya@@scale Alegreya-BoldItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{sl}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{n}{on the spot
+      <-> \Alegreya@@scale Alegreya-Regular-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{it}{
+      <-> \Alegreya@@scale Alegreya-Italic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{sl}{
+      <-> ssub * Alegreya-LF/m/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{sl}{
+      <-> ssub * Alegreya-LF/b/sl
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{n}{
+      <-> ssub * Alegreya-LF/b/n
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{it}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+%%%% NOW YOU CAN SAFELY LOAD Alegreya (don't pass a scale option)
+\usepackage{Alegreya}
+\newcommand{\link}[1]{\footnote{\color{blue}\href{#1}{#1}}}
+
+\title{Programming Assignment 2 -- Basic Probability \\[2mm]
+\large{2018 -- 2019, Master of Logic, University of Amsterdam}}
+\author{Instructor: Jakub Dotla\v{c}il}
+\date{Submission deadline: Sunday, November 11, 8 pm}
+
+\begin{document}
+\maketitle
+
+\paragraph{Note:} if the assignment is unclear to you or if you get stuck, do not hesitate to contact \href{mailto:j.dotlacil@uva.nl}{me}. You can also post a question on Canvas.
+
+\section{Exercise}
+This week we will start to work with some real data. This website Project Gutenberg\link{https://www.gutenberg.org/} provides access to thousands of
+books which have run out of copyright. They are freely downloadable for you to read. Our goal is to analyse these books for some of their basic 
+properties. In particular, we want to find their most frequent and least frequent words and also find the counts for specific words. For example,
+we might want to know how often the word \textit{Alice} occurs in Alice in Wonderland.
+
+Our program will be able to read text files. During development you can experiment
+with any book you like. However, when grading we will all use this version of War and Peace.\link{https://www.gutenberg.org/cache/epub/2600/pg2600.txt}
+
+As you will notice, the file contains some document information from Project Gutenberg. This means that our word counts will not be entirely correct as
+there are also words that do not belong to the main text. We will not be bothered by this, however.
+
+One last remark: when you download any book of your choice, please make sure to download the \texttt{Plain Text UTF-8} version of it. Otherwise your
+program will not be able to read the file (at least not without some additional effort).
+
+Here is what your program must be able to do:
+\begin{itemize}
+    \item Ask the user for a path to a text file and read that text file into memory (we will help you with this, part of the code for this are already present)
+\item Run four functions:
+\begin{enumerate}
+\item The first function, called collect\_frequencies, will take the name of the file provided from the user, and it returns a dictionary with frequency counts for every word in the file
+\item The second function, called find\_frequent\_words, has an optional argument, amount, which specifies how many frequent words should be found. It outputs two lists. The first list consists of the most frequent words, as many as specified in amount. The second list is the list of the frequencies of the corresponding words. The default value of amount is 50.
+\item The third function, called find\_word, has an optional argument, word. It returns the frequency of the word if it is present in the file. If the word is not present, the function returns nothing (and prints a message that the word was not found). If no value for the argument word is specified, the function randomly selects a word from the file.
+\item The fourth function, print\_lists, which prints the output of find\_frequent\_words and find\_word.
+\end{enumerate}
+Notice that reading the text anew for every operation would be extremely wasteful. You should try to get your program to memorize all
+relevant information.
+\end{itemize}
+
+\section{Grading}
+The task is to count words regardless of casing. This means that $ The $ and $ the $ should be treated as the same word. To achieve this, all words should be lowercased before counting them. However, we are not going to worry about punctuation. For us $ Alice $ and $ Alice? $ are different words. We define a word as any sequence
+of characters that is divided from other words by white spaces.
+
+\begin{itemize}
+\item[1 point] When the program starts it asks the user for a path to a file (including the file name). It is ok for the program to crash if this path does not exist.
+\item[2 points] The program reads the text file only once and stores all relevant information in a dictionary. The functions find\_frequent\_words, find\_word do not operate on the file, only on the dictionary created from the file. Depending on your computer, reading a file can take several seconds.
+\item[1 point] The program generates a dictionary using the function collect\_frequencies, with words as keys and integers as values.
+\item[2 points] The program prints the number $n$ of most frequent words to the screen as a list in which each line looks as follows (1 point):
+$$ word~~~wordCount $$
+If there are several words of the same count, they are ordered alphabetically (1 point).
+\item[2 points] The count of specific words is printed in the same format as the above two items (1 point). If a word does not occur in the text, the program prints \textit{Sorry, this
+word does not occur in the text} (1 point).
+\item[1 point] The function find\_frequent\_words has an optional argument, which has the default value of 50 (that is, by default, 50 most frequent words are returned). The default value can be changed and the function still works correctly.
+\item[1 point] The function find\_word has an optional argument, word. If no value is specified for this argument, the function selects a word from the file at random. If the value is specified, the function correctly returns only the information about that word.
+\end{itemize}
+
+Notice: for the counts, lists of the 1000 most frequent will be provided to you during the review period. We will also give
+you detailed instructions on how to compare two lists. To test the specific word functionality, you can just pick a couple of words from these lists.
+
+\enlargethispage{1cm}
+\section{Counters}
+For this exercise, it may be helpful to use a Python data structure known as 
+\href{https://pymotw.com/3/collections/counter.html}{Counter}. It is not strictly necessary to use counters for this exercise but they might make your life a lot easier. Also make sure to the check the \href{https://docs.python.org/3/library/collections.html#collections.Counter}{official documentation}.
+
+
+\end{document}
