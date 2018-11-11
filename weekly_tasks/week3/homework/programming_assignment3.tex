@@ -1,0 +1,179 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue, breaklinks=true}
+\newcommand{\angles}[1]{$\langle$#1$\rangle$}
+
+%%%%% ADD THIS TO YOUR PREAMBLE BEFORE LOADING Alegreya
+\DeclareFontFamily{T1}{Alegreya-LF}{}
+\newcommand{\adjustalegreya}{\fontdimen5\font=\fontcharht\font`x }
+\makeatletter
+\let\Alegreya@@scale\@empty
+%%% uncomment the next line if you want to scale the font,
+%%% changing the value to what suits you
+% \def\Alegreya@@scale{s*[0.9]}%
+\makeatother
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{n}{
+      <-> \Alegreya@@scale Alegreya-Black-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{it}{
+      <-> \Alegreya@@scale Alegreya-BlackItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{sl}{
+      <-> ssub * Alegreya-LF/k/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{n}{
+      <-> \Alegreya@@scale Alegreya-Bold-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{it}{
+      <-> \Alegreya@@scale Alegreya-BoldItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{sl}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{n}{on the spot
+      <-> \Alegreya@@scale Alegreya-Regular-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{it}{
+      <-> \Alegreya@@scale Alegreya-Italic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{sl}{
+      <-> ssub * Alegreya-LF/m/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{sl}{
+      <-> ssub * Alegreya-LF/b/sl
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{n}{
+      <-> ssub * Alegreya-LF/b/n
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{it}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+%%%% NOW YOU CAN SAFELY LOAD Alegreya (don't pass a scale option)
+\usepackage{Alegreya}
+\usepackage{amsmath}
+
+\title{Programming Assignment 3 -- Basic Probability \\[2mm]
+\large{2017-2018, Master of Logic, University of Amsterdam}}
+\author{Instructors: Jakub Dotla\v{c}il}
+\date{Submission deadline: Sunday, November 18, 8 pm}
+
+\begin{document}
+\maketitle
+
+\paragraph{Note:} if the assignment is unclear to you or if you get stuck, do not hesitate to contact \href{mailto:j.dotlacil@uva.nl}{Jakub}. You can also post a question on Canvas.
+
+\section{Assignment}
+This week we will look at one of the most useful applications of natural language processing techniques: information retrieval. 
+Suppose you have a vast \emph{corpus} of documents such as books, articles or Wikipedia lemma's.
+You are looking for the document that most resembles your \emph{query} ``to be or not to be''. 
+How can we automatically retrieve the document that is `closest to', or `most similar to' or `most relevant for' this query?
+That's what we look at today.
+
+
+
+We will try to quantify the `similarity' between each document and our query. 
+The idea is to represent fragments of text (documents or queries) as \emph{vectors}.\footnote{You can read more about this so called vector-space model on \href{https://en.wikipedia.org/wiki/Vector_space_model}{Wikipedia}} 
+Vectors are simply lists of numbers, such as $(4, 4.2, 1.2, 6, 7)$. 
+This particular vector was five-dimensional, since it has five entries. 
+Vectors with two dimensions such as $(7, 2)$ can be thought of as points in a plane, or as an arrow pointing from the origin to that point in the plane.
+The `similarity' between two vectors $a$ and $b$ can be measured by computing the \emph{angle} between such vectors. 
+Well, the cosine of that angle, to be precise, hence the name \emph{\href{https://en.wikipedia.org/wiki/Cosine_similarity}{cosine-similarity}}. 
+For now you only have to know that we can measure the similarity between two vectors (lists of numbers) $a=(a_1, a_2, \dots, a_n)$ and $b = (b_1, b_2, \dots, b_n)$ as follows:
+\begin{align}
+  \text{similarity}(a, b) 
+    = \frac{ a_1 \cdot b_1 \;+\; a_2 \cdot b_2 \;+\; \dots \;+\; a_n \cdot b_n}%
+      {\text{norm}(a) \cdot \text{norm}(b)}
+\end{align}
+where the norm (or length if you like) is
+\begin{align}
+  \text{norm}(a) = \sqrt{a_1^2 + a_2^2 + \dots + a_n^2}
+\end{align}
+
+
+
+Good. 
+So how do we turn text into vectors?
+There are many possible ways to do so, and we will only look at the simplest possibility (the most naive approach): use the vector of word-frequencies.
+This is not completely trivial.
+It is quite likely that a document contains a word that is not in any of the other documents, but to compare vectors they have to be of the same length.
+Differently put, they have to live in the same space.
+We therefore first construct a \emph{vocabulary}: the list of the, say, 5000 most common words throughout the entire corpus.
+We can then count the number of times every word \emph{in the vocabulary} occurs in a given document. 
+If you put those $5000$ frequencies in a list, you get a 5000-dimensional vector representing your document (or query).
+It's quite likely that it contains many zero's, but that's fine.\footnote{But note that if your vector contains \emph{only} zeros, you might run into problems...} 
+And once we have vectors, we can compute cosine similarities, and identify the document with the highest similarity to our query.
+
+
+Word frequency vectors are probably the simplest, or most naive, vector representations. 
+You can easily improve on this in many ways, and we encourage you to try so (but perhaps after finishing the homework). 
+The Python file walks you through the assignment in nine steps, just like the in class exercises. 
+The file contains lots of additional explanation, but if something is unclear, do not hesitate to post your questions on the forum. Here are some practical remarks:
+
+\begin{itemize}
+  \item Note that you need to download and unzip the \texttt{corpus.zip} file and move the \texttt{corpus} folder to the folder you are working in. 
+  \item You will have to use \texttt{Counter} objects a lot; see assignment 2 for more info.
+  \item You are not allowed to use \texttt{numpy}, a library for working with vectors we will discuss later in the course. Part of this assignment is to learn how to work with Python's data structures. Also, it will illustrate why you normally \emph{do} want to use \texttt{numpy} in these situations.
+  \item Our implementation will not be very efficient (we read out all the files twice, for example), but we hope this structure makes it easier to follow \emph{what} the code should be doing. 
+\end{itemize}
+
+\section{Grading}
+
+This assignment is graded stepwise: you can get a number of points for each of the nine steps. 
+Below, we give some tips and tests that help you to check if the steps were solved correctly.
+If someone has made a mistake, you subtract points only once. 
+For example suppose I've made a mistake in step 6, as a result of which step 7 also produces the wrong results. If step 7 would have worked fine if step 6 had been correct, then you can give full points for step 7. (But not for step 6).
+
+
+\begin{enumerate}
+  \item \textbf{Collecting word frequencies: 1pt} 
+
+  Check if the corpus frequencies are computed correctly. The `development subset' should contain 24164 words; the full corpus 146885.
+
+
+  \item \textbf{Make vocabulary: 1pt}
+
+  Check if the vocabulary of the top 100 words is constructed correctly. The most common words in the corpus (full or subset) should be stop words like \emph{the, and, of, to}, etc. Also the empty string \texttt{''}  and the newline character \texttt{\textbackslash n} should be highly frequent `words'.
+  
+  \item \textbf{Collect vocabulary word frequencies: 1pt}
+
+  Check if the function \texttt{freq\_to\_vector} correctly returns a list of frequencies. You can test if \texttt{freq\_to\_vector(Counter(\{'foo': 10, 'bar': 2\}), ['bar', 'foo']))} indeed returns \texttt{[2, 10]}. Note that the order of the frequencies has to correspond to the order of the words in the vocabulary.
+  
+  \item \textbf{Collect vocabulary word frequencies: 1pt}
+  
+  You can check that, when using the development subset of the corpus, \\\texttt{corpus['1789-Washington']['freq\_vect']} contains a vector of the form \texttt{[0, 116, 47, 71, ...]} indicating that \emph{the} occurs 116 times, \emph{and} 47 times and \emph{of} 71 times.
+  
+  \item \textbf{Norm: 1pt}
+
+  Check if the function \texttt{norm} works as expected on the tests included in assignment file (e.g. \texttt{norm([3, 4])} returns \texttt{5.0})
+  
+  \item \textbf{Cosine similarity: 2pt}
+  
+  Check if the cosine similarity works as expected on the tests.
+  
+  \item \textbf{Compute cosine similarities: 1pt}
+  
+  On the development subset, the similarity between two inaugural addresses should be 0.8873; between the addresses and Whitmans poetry collection 0.6428 and 0.6389 respectively.
+  
+  \item \textbf{Arbitrary queries: 1pt}
+
+  Check if the function correctly returns a frequency vector for arbitrary text. For example, \texttt{text\_to\_vector('foo foo bar test', ['bar', 'foo'])} should return \texttt{[1, 2]}.
+  
+  \item \textbf{Rank documents: 1pt}
+  
+  On the development set, \texttt{1789-Washington} should be the most similar fragment, but on the full corpus we should correctly retrieve \texttt{1797-Adams}.
+\end{enumerate}
+
+\end{document}
