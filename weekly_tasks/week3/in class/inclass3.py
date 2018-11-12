@@ -169,7 +169,7 @@ def select_word(words):
     """
     pass
 
-#9. Now, it is the time to use the actual text file. Create a new generator,
+#9. Now, it is time to use the actual text file. Create a new generator,
 #load_and_split_text. The generator opens a file and for every line, it yields
 #it, split by spaces and with lower-case characters.
 
