@@ -9,7 +9,7 @@ import sys
 import argparse
 from datetime import datetime
 # TODO: replace <package> by the name of the package that you store these files in
-from naive_bayes_solution import NaiveBayes
+from naive_bayes import NaiveBayes
 from os import listdir, remove, system
 from os.path import isfile, join
 
