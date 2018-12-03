@@ -14,7 +14,15 @@ def plot_unit_circle():
 
 # Ex 1: Define your plot_points function here...
 
+def plot_points(coordinates, color="k", markersize=1):
+    xs = coordinates[:, 0]
+    ys = coordinates[:, 1]
+    plt.plot(xs, ys, color=color, markersize=markersize, marker="o", linestyle="")
+
 # Ex 2: Define your sample_from_square function here...
+
+def sample_from_square(num_of_samples):
+
 
 # Ex 3: Define your function test_if_in_circle here
 
@@ -128,8 +136,7 @@ def exercise4():
 
 
 if __name__ == '__main__':
-    pass
-    # exercise1()
+    exercise1()
     # exercise2()
     # exercise3()
     # exercise4()

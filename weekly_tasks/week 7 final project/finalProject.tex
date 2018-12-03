@@ -76,7 +76,7 @@
 
 \section{Project Description}
 
-In this project you will perform your own data analysis in groups of 2 people. Your task is
+In this project you will perform your own data analysis. Your task is
 to use a technique known as linear regression (see below) to predict the median price of houses
 in suburbs of Boston in the 1980s. The relevant information about the data can be found
 \href{http://www.cs.toronto.edu/\%7Edelve/data/boston/bostonDetail.html}{here}. The variable that you need
@@ -85,9 +85,7 @@ to predict is stored in the last column, called MEDV.
 This project will teach you two things: first, it introduces you to a continuous distribution, namely
 the Gaussian. Linear regression and other Gaussian models are very useful in practice and you will
 see them a lot when working with data. Second, you will have to interpret your results. Rather than
-just running the algorithm, you will have to make sense of the algorithm's output. In particular, you
-will express what the weights learned by linear regression tell you about patterns in the data.
-
+just running the algorithm, you will have to make sense of the algorithm's output.
 \section{Data}
 
 The data is present in the package \texttt{scikit-learn}. Install the package. After that, run:\\
@@ -104,9 +102,9 @@ In the features matrix, each row is one case. That is, each row represents infor
 
 \section{Linear Regression}
 To familiarise yourself with linear regression and its implementation, watch the
-videos of Sections 1.2--1.3 and 2.1 (you can skip 2.1.5) of \href{https://www.youtube.com/watch?v=kHwlB_j7Hkc&list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN&index=5&t=2s}{Andrew Ng's machine
+videos of Sections 2.1--4.5 (this is quite a lot of movies, but most of them just review linear algebra and can be skipped) of \href{https://www.youtube.com/watch?v=kHwlB_j7Hkc&list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN&index=5&t=2s}{Andrew Ng's machine
 learning course}. You can also sign up for \href{https://www.coursera.org/learn/machine-learning/home}{it on coursera} to see them
-in higher resolution. To get more familiar with linear algebra, you should check Section 1.4. Here, we will only shortly highlit the math of linear regression.
+in higher resolution. Here, we will only shortly highlight the math of linear regression.
 
 From a probabilistic view point, we assume that our data are independently distributed. This is a weaker
 assumption than we have made so far because we do not assume that the distributions of our data points
@@ -135,6 +133,8 @@ Each coefficient in $ w $ relates its predictor linearly to the output variable.
 
 Your task is to implement linear regression for the Boston housing data set. You first implement a baseline regression model. A baseline of this study is the most basic implementation of the linear regression method on this dataset (you have to justify your choice of 
 baseline!). Thereafter, you try to improve your model and get better predictions.
+
+You have to submit a code that (i) runs linear regression on the dataset, (ii) specifies the baseline model, (iii) specifies the best model, and prints $R^{2}$ (see below) for both baseline and best model, (iv) plots a graph showing a relation between one variable (of your choosing) on the x-axis, and the predicted value on the y-axis.
 
 \section{Evaluating Linear Regression}
 
@@ -214,14 +214,6 @@ A pre-final remark: it is not always clear whether a feature should be seen as c
 In the housing data, we have the RAD feature. Should that be continuous or categorical? This is
 something you may want to experiment with.
 
-\paragraph{Cautionary Note} Shockingly often, people (in particular researchers) try to ascribe 
-a causal effect to predictors. This is not warranted by the model! In the football example above, being
-German goes hand in hand with having a higher football ability than being Dutch. This is simply an 
-observation, however. It does not mean that being German \textit{causes} you to be a better footballer.
-Rather, it means on average Germans are better footballers than Dutch
-(for reasons that may or may not be related to nationality). You
-should thus be careful when interpreting your results.
-
 \section{Learning}
 
 Learning a linear regression model can be done with the technique of least squares. This basically
@@ -237,17 +229,23 @@ increase in $ R^{2} $.
 
 \section{Deliverables}
 \begin{itemize}
-\item \textbf{Code:} Any code that you have written. This code should be executable either from the command line or from Pycharm (or both).
+\item \textbf{Code:} A code that you have written, collected in one python file. This code should be executable either from the command line or from Pycharm (or both).
+\item The code can use libraries (numpy, matplotlib), but \emph{it must not use a previously implemented linear regression}! You have to build the regression yourself.
+\item Readme file: The file specifies how to run the code if necessary (for example, because running it requires optional arguments). The file should also shortly summarize what you picked as the baseline model, what you picked as the final model, and (very shortly) why you made this choice.
 \end{itemize}
 
 \section{Assessment}
 The lecturer of the course determines the final grade for the project.
 
-I will take the following aspects into account:
+Here is the break-down of what I consider:
 \begin{itemize}
-\item Code quality: Is the code executable? Does the readme file
-  explain how to run it? Are there doc-strings in the code? Is it
-  sufficiently commented so that you can easily follow what happens?
+    \item 2 points: The code should be well documented, so that I can understand what each class and method and function does. The code should run (from Pycharm or command line) and (at least) print the baseline model and its $R^2$, the best model and its $R^2$, and plot at least one graph.
+    \item 3 points: Linear regression is implemented correctly and it works with numpy arrays (e.g., it does not loop through lists).
+    \item 1 point: Plotting function works and it plots a graph showing the relation between (some subset of) features and the target variable. The data points are printed as dots and the linear regression fit is also shown in the graph.
+    \item 1 point: The best model has $R^2$ higher than 0.7
+    \item 1 point: The best model has $R^2$ higher than 0.75
+    \item 1 point: The best model has $R^2$ higher than 0.8
+    \item 1 point: Description and discussion in the readme file is followable, it is explained what the baseline and best models are. 
 \end{itemize}
 
 
