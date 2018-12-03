@@ -11,6 +11,46 @@ def plot_unit_circle():
     plt.gca().set_aspect('equal', 'datalim')
 
 ####################################################################
+##################### S O L U T I O N S ############################
+####################################################################
+
+def plot_points(coordinates, color='k', markersize=1):
+    xs = coordinates[:, 0]
+    ys = coordinates[:, 1]
+    plt.plot(xs, ys, marker='o', color=color, ms=markersize, linestyle='')
+
+def sample_from_square(num_samples):
+    unscaled_samples = np.random.rand(num_samples, 2)
+    samples = unscaled_samples * 2 - 1
+    return samples
+
+def test_if_in_circle(coordinates):
+    sum_of_squares = (coordinates ** 2).sum(axis=1)
+    is_inside = sum_of_squares <= 1
+    return is_inside
+
+def show_monte_carlo_pi(num_samples, show_circle=True):
+    samples = sample_from_square(num_samples)
+    is_inside = test_if_in_circle(samples)
+
+    hits = samples[is_inside == True, :]
+    misses = samples[is_inside == False, :]
+
+    estimate = 4 * len(hits) / num_samples
+
+    plot_points(hits, 'green')
+    plot_points(misses, 'red')
+    plt.title("Estimate of pi: $\\pi \\approx " + str(np.round(estimate, 5))
+            + "$ ("+str(num_samples)+" samples)")
+
+    if show_circle:
+        plot_unit_circle()
+
+    plt.axis('off')
+    plt.show()
+
+
+####################################################################
 
 # Ex 1: Define your plot_points function here...
 
@@ -128,7 +168,7 @@ def exercise4():
 
 
 if __name__ == '__main__':
-    # exercise1()
-    # exercise2()
-    # exercise3()
-    # exercise4()
+    exercise1()
+    exercise2()
+    exercise3()
+    exercise4()
