@@ -1,0 +1,96 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{hyperref, linguex, qtree}
+\hypersetup{colorlinks=true, urlcolor=blue, breaklinks=true}
+\newcommand{\angles}[1]{$\langle$#1$\rangle$}
+
+%%%%% ADD THIS TO YOUR PREAMBLE BEFORE LOADING Alegreya
+\DeclareFontFamily{T1}{Alegreya-LF}{}
+\newcommand{\adjustalegreya}{\fontdimen5\font=\fontcharht\font`x }
+\makeatletter
+\let\Alegreya@@scale\@empty
+%%% uncomment the next line if you want to scale the font,
+%%% changing the value to what suits you
+% \def\Alegreya@@scale{s*[0.9]}%
+\makeatother
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{n}{
+      <-> \Alegreya@@scale Alegreya-Black-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{it}{
+      <-> \Alegreya@@scale Alegreya-BlackItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{k}{sl}{
+      <-> ssub * Alegreya-LF/k/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{n}{
+      <-> \Alegreya@@scale Alegreya-Bold-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{it}{
+      <-> \Alegreya@@scale Alegreya-BoldItalic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{b}{sl}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{n}{on the spot
+      <-> \Alegreya@@scale Alegreya-Regular-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{it}{
+      <-> \Alegreya@@scale Alegreya-Italic-lf-t1
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{m}{sl}{
+      <-> ssub * Alegreya-LF/m/it
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{sl}{
+      <-> ssub * Alegreya-LF/b/sl
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{n}{
+      <-> ssub * Alegreya-LF/b/n
+}{\adjustalegreya}
+
+\DeclareFontShape{T1}{Alegreya-LF}{bx}{it}{
+      <-> ssub * Alegreya-LF/b/it
+}{\adjustalegreya}
+
+%%%% NOW YOU CAN SAFELY LOAD Alegreya (don't pass a scale option)
+\usepackage{Alegreya}
+\usepackage{amsmath}
+
+\newcommand{\link}[1]{\footnote{\color{blue}\href{#1}{#1}}}
+\title{Programming Assignment 5 -- Basic Probability, Computing and Statistics 2018}
+\author{Jakub Dotla\v{c}il}
+\date{Submission deadline: Sunday, December 2nd, 8 p.m.}
+
+\begin{document}
+\maketitle
+
+\section{Assignment}
+In this exam, we will implement a tree structure, which is a hierarchical
+structure often used in computer science. You can use external packages, but
+you cannot use functions/classes that implement trees. If in doubt, you can
+ask me whether a particular function from a package is allowed.
+
+A tree data structure can be defined recursively as a collection of
+nodes, where each node is a data structure consisting of a value, together
+with a list of references to other nodes (the \emph{children}). A tree has a \emph{root} node
+which is not referenced by any other node in the
+tree. Every other node in the tree is referenced exactly once. The trees that refer no other nodes are standardly called \emph{leaves}.
+
+A tree is a natural way to represent the structure of an expression. Unlike other notations, it can represent the computation unambiguously. For example, the computation (1 + 2) * (5 - 4) can be seen as a tree in which: (i) the nodes of an expression tree can be operands like 1 and 2 or operators like +, - and *; (ii) operands are leaf nodes; (iii) operator nodes contain references to their operands. It is common to draw the tree following the conventions as below (the root (the * operator in this case) is on top, the leaves (1, 2, 4, 5) are on the bottom):
+
+\ex. \Tree[.* [.+ 1 2 ] [.- 5 4 ] ]
+
+We will first consider a binary tree (a tree in which every node has maximally two children). Later, we generalize the tree structure to arbitrary trees (any number of children is allowed.
+
+In the exam, you will build a Tree class that implements the tree data structure and that allows operations on it. You can check the exam.py file for further instructions.
+
+\end{document}
