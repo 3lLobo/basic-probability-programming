@@ -6,21 +6,18 @@ import random #we import the random module, to be able to randomly select elemen
 from collections import Counter #this can be useful if you are going to use Counter as a container for word frequencies
 
 #The code below asks user for path to text file; the answer of the user is stored in the variable textFile
-textFile = str(input('Please enter the path to the text file you want to read: '))
-
+textFile = 'weekly_tasks/week2/homework/pg2600.txt'
 #the code below reads in the textfile specified and loops through the file line by line
 def collect_frequencies(nameoffile):
     """
     Using nameoffile, the function returns frequency counts of every word in the file called nameoffile. What is returned can be a dictionary or a Counter.
     """
     with open(nameoffile) as text:
+        words_list = list()
         for line in text:
-            pass
-            #your first task is to substitute pass with a real code. You have to split line into words using white spaces, lower its characters. Then, it has to count all the words just found, creating one dictionary with frequencies stored. The dictionary is then outputed. For example, if the text was this:
-            #Mary sleeps.
-            #John sleeps too.
-            #The dictionary would be: {'mary': 1, 'john': 1, 'sleeps': 2, 'too': 1}. For this task, check the documentation about methods of strings, here:
-#https://docs.python.org/3.5/library/stdtypes.html
+            words_list = words_list + line.lower().split()
+        word_counter = Counter(words_list)
+        return word_counter
 
 def find_frequent_words(word_frequencies, amount=50):
     """
@@ -28,7 +25,7 @@ def find_frequent_words(word_frequencies, amount=50):
 
     The first argument of this function, word_frequencies, is the dictionary or the counter of word frequencies, created in the function collect_frequencies.
     """
-    pass
+    
     #Delete pass and in its place, specify the function; the function should return two lists - one with words, the other one with frequencies; note that you can return two lists by simply writing return list1, list2
 
 def find_word(word_frequencies, word=None):

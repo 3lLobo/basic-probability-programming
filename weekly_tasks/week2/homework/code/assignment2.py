@@ -6,7 +6,8 @@ import random #we import the random module, to be able to randomly select elemen
 from collections import Counter #this can be useful if you are going to use Counter as a container for word frequencies
 
 #The code below asks user for path to text file; the answer of the user is stored in the variable textFile
-textFile = str(input('Please enter the path to the text file you want to read: '))
+# textFile = str(input('Please enter the path to the text file you want to read: '))
+textFile = 'weekly_tasks/week2/homework/pg2600.txt'
 
 #the code below reads in the textfile specified and loops through the file line by line
 def collect_frequencies(nameoffile):

@@ -17,8 +17,8 @@ def step(message):
 # identifier such as '1789-Washington'.
 #
 # To speed up things, use a subset of documents during development:
-corpus = json.load(open('corpus/corpus-subset.json', 'r')) # Subset
-# corpus = json.load(open('corpus/corpus.json', 'r'))   # All docs
+# corpus = json.load(open('weekly_tasks/week3/homework/code/corpus/corpus-subset.json', 'r')) # Subset
+corpus = json.load(open('weekly_tasks/week3/homework/code/corpus/corpus.json', 'r'))   # All docs
 
 # Play around with `corpus`; make sure you understand its structure
 # e.g. print(corpus["1789-Washington"])
@@ -42,7 +42,7 @@ def get_file_freqs(filename):
     :return: Counter
     """
     freqs = Counter()
-    with open(filename, 'r', encoding='utf8') as file:
+    with open('weekly_tasks/week3/homework/code/' + filename, 'r', encoding='utf8') as file:
         for line in file:
             words = split_text(line)
             freqs.update(words)
@@ -59,9 +59,9 @@ step("1. Collect the corpus frequencies")
 # function get_file_freqs and Counter.update() might be useful.
 corpus_freqs = Counter()
 for docid, info in corpus.items():
-    pass
-
-print('Number of unique words in corpus:', len(corpus_freqs))
+    file_freq = get_file_freqs(info['filename'])
+    corpus_freqs = corpus_freqs + file_freq
+    print('Number of unique words in corpus:', len(corpus_freqs))
 
 
 ####
@@ -71,7 +71,7 @@ step("2. Make vocabulary")
 # a list (!) called `vocabulary` which contains the voc_size=100 most
 # common words in the corpus
 voc_size = 100
-vocabulary = [] # <-- change this
+vocabulary = list(zip(*corpus_freqs.most_common(voc_size)))[0]
 
 
 ####
@@ -89,7 +89,13 @@ def freqs_to_vector(freqs, vocabulary):
     :param vocabulary: a list of vocabulary words
     :return: a list with the frequencies of each of the voc. words
     """
-    pass
+    freq_list = list()
+    for word in vocabulary:
+        if word in freqs:
+            freq_list.append(freqs[word])
+        else:
+            freq_list.append(0)
+    return freq_list
 
 
 ####
@@ -101,19 +107,24 @@ step("4. Collect vocabulary word frequencies")
 
 # ...
 
+for docid, info in corpus.items():
+    item_freqs = get_file_freqs(info['filename'])
+    corpus[docid]['freqs'] = freqs_to_vector(item_freqs, list(zip(*item_freqs.most_common(voc_size)))[0])
 
 ####
 step("5. Norm")
 # Define a function that returns the norm of a vector (list of numbers).
 # So e.g. norm([3, 4]) = sqrt( 3^2 + 4^2 ) = 5. You can use the function
 # `math.sqrt` for the square root, and `sum(my_list)` is also useful
+
+import numpy as np
 def norm(vector):
     """
     Computes the norm of a list of numbers
     :param vector: a list of numbers
     :return: a number
     """
-    pass
+    return np.linalg.norm(vector)
 
 #Here are some tests that your norm function should pass
 print("\nTest 5: norm:")
@@ -127,14 +138,17 @@ step("6. Cosine similarity")
 # A = [a_1, ..., a_n] and B = [b_1, ..., b_n]. Recall that the cosine
 # similarity is defined as
 #   sim = (a_1 * b_1 + ... + a_n * b_n) / ( norm(A) * norm(B) )
-def similarity(A, B):
+def similarity(a, b):
     """
     Computes the cosine similarity between two vectors (of equal length)
     :param A: a vector (list of numbers)
     :param B: another vector (list of numbers)
     :return: the cosine similarity (a number between -1 and 1)
     """
-    pass
+    if len(a) != len(b):
+        crop = min(len(a), len(b))
+        a, b = a[:crop], b[:crop]
+    return np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
 
 #Here are some tests that your similiary function should pass
 print("\nTest 6: cosine similarity:")
@@ -150,14 +164,14 @@ step("7. Compute cosine similarities")
 # (id's "1789-Washington" and "1793-Washington") and the
 # poetry collection 'Leaves of grass' by Walt Whitman
 # (id "whitman-leaves").
-# washington1 = ...
-# washington2 = ...
-# whitman = ...
+washington1 = corpus["1789-Washington"]['freqs']
+washington2 = corpus["1793-Washington"]['freqs']
+whitman = corpus['whitman-leaves']['freqs']
 
-# print("\nCosine similarities")
-# print("Washington 1 vs Washington 2:", ... )
-# print("Washington 1 vs Whitman:", ... )
-# print("Washington 2 vs Whitman:", ... )
+print("\nCosine similarities")
+print("Washington 1 vs Washington 2:", similarity(washington1, washington2))
+print("Washington 1 vs Whitman:", similarity(washington1, whitman))
+print("Washington 2 vs Whitman:", similarity(washington2, whitman))
 
 
 ####
@@ -175,7 +189,9 @@ def text_to_vector(text, vocabulary):
     :param vocabulary: the list of vocabulary words
     :return: a list of word-frequencies
     """
-    pass
+    words_list = split_text(text)
+    return freqs_to_vector(vocabulary,words_list)
+
 
 # We have already written the function that ranks the documents for you
 def rank_documents(query_vector, corpus, num=100):
@@ -188,7 +204,7 @@ def rank_documents(query_vector, corpus, num=100):
     """
     similarities = {}
     for doc_id, info in corpus.items():
-        freq_vect = corpus[doc_id]['freq_vect']
+        freq_vect = corpus[doc_id]['freqs']
         similarities[doc_id] = similarity(query_vector, freq_vect)
 
     ranked_ids = sorted(similarities, key=lambda i: similarities[i], reverse=True)
@@ -209,7 +225,7 @@ and armies they must determine to resist than from those contests and \
 dissensions which would certainly arise concerning the forms of government \
 to be instituted over the whole and over the parts of this extensive country."
 
-#...
+print(rank_documents(text_to_vector(adams_txt, corpus_freqs),corpus))
 
 # Do play around with our querying system. To use the full collection,
 # rather than the 3 corpus we used so far, uncomment the line
