@@ -53,7 +53,8 @@ class NaiveBayes(object):
         # This method updates feature_counts by features given the label. It
         # should also update vocabulary with features.
         # TODO: implement this!
-        pass
+        for feature in features:
+            self.feature_counts[label] = Counter.update(features)
 
     def smooth_feature_counts(self, smoothing=1):
         '''Smooth the collected feature counts

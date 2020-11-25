@@ -1,5 +1,6 @@
 from collections import Counter
 import json
+import numpy as np
 print_steps = True
 def step(message):
     if print_steps:
@@ -58,11 +59,17 @@ step("1. Collect the corpus frequencies")
 # the freqs of words in all documents combined. You can use the
 # function get_file_freqs and Counter.update() might be useful.
 corpus_freqs = Counter()
+idf_counter = Counter()
 for docid, info in corpus.items():
     file_freq = get_file_freqs(info['filename'])
     corpus_freqs = corpus_freqs + file_freq
+    idf_counter.update(list(corpus_freqs.keys()))
     print('Number of unique words in corpus:', len(corpus_freqs))
 
+tf_idf = dict()
+total_n = len(idf_counter)
+for key in idf_counter.keys():
+    tf_idf[key] = corpus_freqs[key] * (np.log(total_n / (1 + idf_counter[key]))+1)
 
 ####
 step("2. Make vocabulary")
@@ -72,7 +79,7 @@ step("2. Make vocabulary")
 # common words in the corpus
 voc_size = 100
 vocabulary = list(zip(*corpus_freqs.most_common(voc_size)))[0]
-
+tf_idf_voc = sorted(tf_idf)[:voc_size]
 
 ####
 step("# 3. Collect vocabulary word frequencies")
@@ -109,8 +116,11 @@ step("4. Collect vocabulary word frequencies")
 
 for docid, info in corpus.items():
     item_freqs = get_file_freqs(info['filename'])
-    corpus[docid]['freqs'] = freqs_to_vector(item_freqs, list(zip(*item_freqs.most_common(voc_size)))[0])
+    corpus[docid]['freqs'] = freqs_to_vector(item_freqs, vocabulary)
 
+for docid, info in corpus.items():
+    item_freqs = get_file_freqs(info['filename'])
+    corpus[docid]['freqs_tfidf'] = freqs_to_vector(item_freqs, tf_idf_voc)
 ####
 step("5. Norm")
 # Define a function that returns the norm of a vector (list of numbers).
@@ -194,7 +204,7 @@ def text_to_vector(text, vocabulary):
 
 
 # We have already written the function that ranks the documents for you
-def rank_documents(query_vector, corpus, num=100):
+def rank_documents(query_vector, corpus, num=100, tfidf=False):
     """
     Ranks the documents according to their cosine similarity to a query vector.
     :param query_vector: list
@@ -203,8 +213,9 @@ def rank_documents(query_vector, corpus, num=100):
         list with the corresponding similarity scores
     """
     similarities = {}
+    freq_key = 'freqs_tfidf' if tfidf else 'freqs'
     for doc_id, info in corpus.items():
-        freq_vect = corpus[doc_id]['freqs']
+        freq_vect = corpus[doc_id][freq_key]
         similarities[doc_id] = similarity(query_vector, freq_vect)
 
     ranked_ids = sorted(similarities, key=lambda i: similarities[i], reverse=True)
@@ -245,3 +256,6 @@ print(rank_documents(text_to_vector(adams_txt, corpus_freqs),corpus))
 # in the corpus. It is fairly easy to extend this assignment to use
 # tf-idf scores instead. If you're interested, look up the Wikipedia page
 # https://en.wikipedia.org/wiki/Tf%E2%80%93idf or ask Bas if you need help.
+
+step("11. Play around")
+print(rank_documents(text_to_vector(adams_txt, corpus_freqs),corpus, tfidf=True))
